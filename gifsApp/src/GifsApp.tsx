@@ -1,9 +1,22 @@
+import { useState } from 'react';
+import { GifList } from './gifs/components/GifList';
 import { PreviousSearches } from './gifs/components/PreviousSearches';
 import { mockGifs } from './mock-data/gifs.mock';
 import { CustomHeader } from './shared/components/CustomHeader';
 import { SearchBar } from './shared/components/SerchBar';
 
+  
 export const GifsApp = () => {
+
+  const [previousTerms, setPreviousTerms] = useState(['dragon ball z']);
+  const handleTermClick = (term: string) => {
+    console.log(`Termino de busqueda seleccionado: ${term}`);
+  }
+
+  const handleSearch = (query: string) => {
+      console.log(query);  
+  };
+
   return (   
   <>
   {/* Header */}
@@ -13,25 +26,16 @@ export const GifsApp = () => {
   description='Descubre y comparte el gif perfecto' />
 
   {/* Input de busqueda */}
-   <SearchBar placeholder='Busca el mejor gif' />
+   <SearchBar placeholder='Busca el mejor gif'
+   onQuery={handleSearch} />
 
  {/* Area de resultados */}
  
-  <PreviousSearches />
+  <PreviousSearches searches= {previousTerms} onLabelClick={handleTermClick}/>
 
  {/* Gifs Resultados */}
 
-    <div className='gifs-container'>
-        {
-        mockGifs.map((gif) => (
-            <div key={gif.id} className="gif-card">
-            <img src={gif.url} alt={gif.title} />
-            <h3>{gif.title}</h3>
-            <p>{gif.width} x {gif.height} (1.5 MB)</p>
-            </div>
-        ))
-        }
-    </div>
+   <GifList gifs={mockGifs} />
 
   </>
   )

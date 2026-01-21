@@ -1,11 +1,34 @@
+import { useState } from "react";
+
 interface Props {
     placeholder?: string;
+    onQuery?: (query: string) => void;
 }
-export const SearchBar = ({ placeholder = 'Buscar' }: Props) => {
-  return (
+export const SearchBar = ({ placeholder = 'Buscar', onQuery }: Props) => {
+
+  const [query, setQuery] = useState('');
+  
+  const handleSearch = () => {
+    onQuery(query);
+    setQuery('');
+  };
+ 
+  const hundleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+  
+  return ( 
      <div className="search-container">
-        <input type="text" placeholder={placeholder} />
-        <button>Buscar</button>
+        <input 
+        type="text" 
+        placeholder={placeholder} 
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={hundleKeyDown}
+        />
+        <button onClick={handleSearch}>Buscar</button>
     </div>
   )
 }
