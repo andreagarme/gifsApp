@@ -18,8 +18,3 @@ export const getGifsByQuery = async (query: string): Promise<Gif[]> => {
     height: Number(gif.images.original.height),
   }));
 };
-
-//   fetch(
-//     `https://api.giphy.com/v1/gifs/search?api_key=iLJB4GnL3VfQqk1eSYpWoLyd3KAs5lpv&q=${query}&limit=10&lang=es`,
-//   );
-// };
